@@ -128,10 +128,43 @@ Optional arguments:
 *   ``--delay SECONDS``: when used, delay between frames (in case when there is animation) can be changed.
 
 
-Data creation
-~~~~~~~~~~~~~
+LIDAR points generation
+~~~~~~~~~~~~~~~~~~~~~~~
 
-To create synthetic data simulating a drone's flight:
+The aim of this functionality is to satisfy the following criteria:
+
+Generate new LIDARDPoints data based on a new room layout and new plausible flight plan.
+This data is not provided so you will need to create the layout and flight plan yourself.
+This can either be done manually (ensure you include your data with your submission) or
+programmatically.
+
+Input: Mapping.csv and FlightPath.csv (created, you may also use a map that matches the sample
+data provided however you will first need to generate this file (from part 5 for example)
+
+Output: LIDARDPoints.csv
+
+To create synthetic data simulating a drone's flight using two CSV files with mapping and flight path:
+
+.. code:: bash
+
+    python3 -m lidar_playground lidargen --walls-data PATH --gps-data PATH --lidar-data PATH
+    # example:
+    python3 -m lidar_playground lidargen --walls-data test/examples/walls1.csv --gps-data test/examples/my_flight.csv --lidar-data test/examples/my_new_lidar.csv
+
+Where GPS and LIDAR files are according to specification above. However in this case the GPS file
+is input, and LIDAR file will be generated.
+
+And walls file is also a CSV file. Each line of the file should represent one wall in the building.
+Each wall should be represented by its start and end point in millimeters (xstart, ystart, xend, yend).
+
+
+Data creation from SVG
+~~~~~~~~~~~~~~~~~~~~~~
+
+The aim of this functionality is to create additional data for tests and experiments with
+the two above functionalities.
+
+To create synthetic data simulating a drone's flight using only one existing file in SVG format:
 
 .. code:: bash
 
