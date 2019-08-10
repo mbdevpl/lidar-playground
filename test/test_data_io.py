@@ -3,7 +3,8 @@ import pathlib
 import tempfile
 import unittest
 
-from lidar_playground.data_io import read_flight_data, write_flight_data, read_lidar_data
+from lidar_playground.data_io import \
+    read_flight_data, write_flight_data, read_lidar_data, write_lidar_data
 
 _HERE = pathlib.Path(__file__).parent
 
@@ -28,6 +29,20 @@ class Tests(unittest.TestCase):
         path = pathlib.Path('LIDARPoints.csv')
         lidar_data = read_lidar_data(_HERE.joinpath('examples', path))
         self.assertEqual(len(lidar_data), 34)
+
+    def test_write_lidar_data(self):
+        path = pathlib.Path('LIDARPoints.csv')
+        lidar_data = read_lidar_data(_HERE.joinpath('examples', path))
+        with tempfile.NamedTemporaryFile(suffix='.csv', delete=True) as tmp_file:
+            tmp_path = pathlib.Path(tmp_file.name)
+            write_lidar_data(lidar_data, tmp_path)
+            roundtrip_data = read_lidar_data(tmp_path)
+        self.assertListEqual(list(lidar_data.keys()), list(roundtrip_data.keys()))
+        for val1, val2 in zip(list(lidar_data.values()), list(roundtrip_data.values())):
+            self.assertEqual(len(val1), len(val2))
+            for (k1, v1), (k2, v2) in zip(val1.items(), val2.items()):
+                self.assertEqual(k1, k2)
+                self.assertEqual(v1, v2)
 
     def test_consistency(self):
         flight_data_path = pathlib.Path('FlightPath.csv')

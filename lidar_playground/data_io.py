@@ -44,7 +44,6 @@ def read_flight_data(path: pathlib.Path) -> pd.DataFrame:
 
 
 def write_flight_data(flight_data: pd.DataFrame, path: pathlib.Path):
-    # print(flight_data.loc[0])
     with path.open('w') as flight_file:
         flight_csv = csv.writer(flight_file)
         for index, row in flight_data.iterrows():
@@ -90,4 +89,9 @@ def read_lidar_data(path: pathlib.Path) -> t.Dict[int, t.Dict[float, float]]:
 
 
 def write_lidar_data(lidar_data: t.Dict[int, t.Dict[float, float]], path: pathlib.Path):
-    raise NotImplementedError()
+    with path.open('w') as lidar_file:
+        lidar_csv = csv.writer(lidar_file)
+        for index, data in lidar_data.items():
+            lidar_csv.writerow([index, len(data)])
+            for angle, dist in data.items():
+                lidar_csv.writerow([angle, dist * 1000])
