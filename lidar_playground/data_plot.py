@@ -12,7 +12,7 @@ from .geometry import normalize_radians, cartesian, polar
 _LOG = logging.getLogger(__name__)
 
 
-def prepare_plot_data(flight_data, lidar_data):
+def prepare_plot_data(flight_data, lidar_data) -> t.Tuple[dict, list]:
     all_ = {'x': [], 'y': []}
     as_series = []
     for id_ in lidar_data:

@@ -110,8 +110,6 @@ And GPS data should also a CSV file. The first line has the scan ID and number o
 
 In an example files ``test/examples/LIDARPoints.csv`` and ``test/examples/FlightPath.csv`` 34 sweeps are included.
 
-To create a visualization of drone's flight:
-
 
 Data creation
 ~~~~~~~~~~~~~
