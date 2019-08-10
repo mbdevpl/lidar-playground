@@ -43,6 +43,10 @@ def read_flight_data(path: pathlib.Path) -> pd.DataFrame:
     return pd.DataFrame(data=data, index=index, columns=('x', 'y'))
 
 
+def write_flight_data(flight_data: pd.DataFrame, path: pathlib.Path):
+    raise NotImplementedError()
+
+
 def read_lidar_data(path: pathlib.Path) -> t.Dict[int, t.Dict[float, float]]:
     """Read drone LIDAR data.
 
@@ -78,3 +82,7 @@ def read_lidar_data(path: pathlib.Path) -> t.Dict[int, t.Dict[float, float]]:
             if remaining == 0:
                 record = None
     return lidar_data
+
+
+def write_lidar_data(lidar_data: t.Dict[int, t.Dict[float, float]], path: pathlib.Path):
+    raise NotImplementedError()
