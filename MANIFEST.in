@@ -1,0 +1,6 @@
+include setup_boilerplate.py
+include *requirements.txt
+include LICENSE
+include NOTICE
+include ./*/py.typed
+recursive-include ./test/examples *.*
