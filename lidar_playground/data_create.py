@@ -1,4 +1,3 @@
-import collections
 import pathlib
 import typing as t
 
@@ -7,9 +6,7 @@ from svglib.svglib import svg2rlg
 from reportlab.graphics.shapes import Group, Rect, Path
 from reportlab.lib.colors import Color
 
-Point = collections.namedtuple('Point', 'x, y')
-
-Line = collections.namedtuple('Line', 'x1, y1, x2, y2')
+from .geometry import Point, Line
 
 
 def extract_group_shapes_recursive(group):

@@ -1,9 +1,14 @@
+import collections
 import logging
 import typing as t
 
 import numpy as np
 
 _LOG = logging.getLogger(__name__)
+
+Point = collections.namedtuple('Point', 'x, y')
+
+Line = collections.namedtuple('Line', 'x1, y1, x2, y2')
 
 
 # def normalize_degrees(degrees: float) -> float:
