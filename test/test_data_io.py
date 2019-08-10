@@ -24,5 +24,5 @@ class Tests(unittest.TestCase):
         flight_data = read_flight_data(_HERE.joinpath('examples', flight_data_path))
         lidar_data_path = pathlib.Path('LIDARPoints.csv')
         lidar_data = read_lidar_data(_HERE.joinpath('examples', lidar_data_path))
-        assert len(flight_data) == len(lidar_data)
-        assert set(flight_data.index) == lidar_data.keys()
+        self.assertEqual(len(flight_data), len(lidar_data))
+        self.assertEqual(set(flight_data.index), lidar_data.keys())
