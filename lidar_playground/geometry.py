@@ -1,15 +1,12 @@
-import collections
+"""General-purpose 2D geometry functions."""
+
 import logging
 import typing as t
 
 import numpy as np
+from shapely.geometry import LineString, Point
 
 _LOG = logging.getLogger(__name__)
-
-Point = collections.namedtuple('Point', 'x, y')
-
-Line = collections.namedtuple('Line', 'x1, y1, x2, y2')
-
 
 # def normalize_degrees(degrees: float) -> float:
 #     if degrees > 180:
