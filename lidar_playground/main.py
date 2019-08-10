@@ -35,6 +35,9 @@ def prepare_parser():
         '--gps-data', metavar='PATH', type=pathlib.Path, default=None,
         help='path to CSV file with GPS data')
     subparser.add_argument(
+        '--frame', metavar='NUMBER', type=int, default=None,
+        help='ID of the frame to be displayed')
+    subparser.add_argument(
         '--delay', metavar='SECONDS', type=float, default=0.1,
         help='delay in seconds between showing of subsequent frames')
 
@@ -71,7 +74,12 @@ def main(args=None):
         print('Post-processing...')
         all_, as_series = prepare_plot_data(flight_data, lidar_data)
         print('Visualizing...')
-        visualize_flight(as_series, delay=parsed_args.delay)
+        if parsed_args.frame is None:
+            begin_frame, end_frame = 0, None
+        else:
+            begin_frame, end_frame = parsed_args.frame, parsed_args.frame + 1
+        visualize_flight(
+            as_series, begin_frame=begin_frame, end_frame=end_frame, delay=parsed_args.delay)
 
     if parsed_args.command == 'create':
         if parsed_args.svg is None or parsed_args.lidar_data is None \

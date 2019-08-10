@@ -93,11 +93,22 @@ Below is the description of current features.
 Visuzalization
 ~~~~~~~~~~~~~~
 
+The aim of this functionality is to satisfy the following criteria:
+
+Create a program to provide an appropriate visualization of the drone’s path and the LIDAR data.
+Ideally, the display should be able to show 1 sweep (1 scan ID) of data in isolation as well as
+all the sweeps combined together. This can be on separate displays or on the same display
+(with individual sweeps shown by highlighting for example)
+
+Input: LIDARDPoints.csv and FlightPath.csv (provided or created from another Task)
+
+Output: On-screen display
+
 To display a visualization of drone's flight:
 
 .. code:: bash
 
-    python3 -m lidar_playground plot --lidar-data PATH --gps-data PATH [--delay SECONDS]
+    python3 -m lidar_playground plot --lidar-data PATH --gps-data PATH [--frame NUMBER] [--delay SECONDS]
     # example:
     python3 -m lidar_playground plot --lidar-data test/examples/LIDARPoints.csv --gps-data test/examples/FlightPath.csv
 
@@ -109,6 +120,12 @@ And GPS data should also a CSV file. The first line has the scan ID and number o
 (always 1). The next line is the X,Y location of the drone in meters.
 
 In an example files ``test/examples/LIDARPoints.csv`` and ``test/examples/FlightPath.csv`` 34 sweeps are included.
+
+Optional arguments:
+
+*   ``--frame NUMBER``: when used, only one frame of the visualization is diplayed, i.e. no animation happens.
+
+*   ``--delay SECONDS``: when used, delay between frames (in case when there is animation) can be changed.
 
 
 Data creation
