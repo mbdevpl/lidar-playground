@@ -17,7 +17,7 @@ This package was created as an experiment.
 Requirements
 ============
 
-Python 3.7 or later.
+Python 3.6 or later.
 
 Python libraries as specified in `<requirements.txt>`_.
 
