@@ -9,6 +9,10 @@
 LIDAR playground
 ================
 
+.. image:: https://travis-ci.com/mbdevpl/lidar-playground.svg?token=yEUe1Xs3qujpSZnGZsCt&branch=master
+    :target: https://travis-ci.com/mbdevpl/lidar-playground
+    :alt: build status from Travis CI
+
 Various experiments with LIDAR data.
 
 This package was created as an experiment.
