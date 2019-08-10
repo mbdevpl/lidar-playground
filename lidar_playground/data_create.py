@@ -1,7 +1,9 @@
 import logging
+import math
 import pathlib
 import typing as t
 
+import numpy as np
 import pandas as pd
 from shapely.geometry import Point, LineString
 from svglib.svglib import svg2rlg
@@ -69,6 +71,23 @@ def simulate_flight(walls: t.List[LineString], sweep_locations: t.List[Point]):
 
     _LOG.debug('GPS points: %i', len(flight_data))
 
+    angles = np.linspace(-np.pi, np.pi, 500)
+    cartesians = [cartesian(1000, radians) for radians in angles]
+
     lidar_data: t.Dict[int, t.Dict[float, float]] = {}
+
+    for i, point in enumerate(sweep_locations):
+        lidar_data[i] = {}
+        for x, y in cartesians:
+            ray = LineString([(point.x, point.y), (point.x + x, point.y + y)])
+            intersection = closest_intersection(ray, walls)
+            if intersection is None:
+                continue
+            distance, radians = polar(intersection.x - point.x, intersection.y - point.y)
+            lidar_data[i][math.degrees(radians)] = distance
+        assert len(lidar_data[i]) <= 500
+
+    _LOG.debug('LIDAR points: %i', len(lidar_data))
+    assert len(flight_data) == len(lidar_data)
 
     return flight_data, lidar_data

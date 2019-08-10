@@ -38,3 +38,20 @@ def cartesian(distance: float, radians: float) -> t.Tuple[float, float]:
 
 def polar(x: float, y: float) -> t.Tuple[float, float]:
     return np.hypot(x, y), np.arctan2(y, x)
+
+
+def closest_intersection(line: LineString, lines: t.Sequence[LineString]) -> t.Optional[Point]:
+    intersections = []
+    for line_ in lines:
+        intersection = line.intersection(line_)
+        if not isinstance(intersection, Point):
+            continue
+        intersections.append(intersection)
+
+    if not intersections:
+        return None
+
+    xfun = min if line.coords[0][0] < line.coords[1][0] else max
+    yfun = min if line.coords[0][1] < line.coords[1][1] else max
+
+    return Point(xfun(_.x for _ in intersections), yfun(_.y for _ in intersections))
