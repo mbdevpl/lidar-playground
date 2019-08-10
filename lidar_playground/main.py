@@ -6,7 +6,7 @@ import sys
 
 from ._version import VERSION
 from .data_io import read_flight_data, read_lidar_data
-from .data_plot import prepare_plot_data
+from .data_plot import prepare_plot_data, visualize_flight
 
 
 def prepare_parser():
@@ -33,6 +33,9 @@ def prepare_parser():
     subparser.add_argument(
         '--gps-data', metavar='PATH', type=pathlib.Path, default=None,
         help='path to CSV file with GPS data')
+    subparser.add_argument(
+        '--delay', metavar='SECONDS', type=float, default=0.1,
+        help='delay in seconds between showing of subsequent frames')
 
     return parser
 
@@ -49,7 +52,10 @@ def main(args=None):
     if parsed_args.command == 'plot':
         if parsed_args.lidar_data is None or parsed_args.gps_data is None:
             parser.error('at least one of LIDAR or GPS data paths not provided')
+        print('Loading input data...')
         flight_data = read_flight_data(parsed_args.gps_data)
         lidar_data = read_lidar_data(parsed_args.lidar_data)
+        print('Post-processing...')
         all_, as_series = prepare_plot_data(flight_data, lidar_data)
-        raise NotImplementedError()
+        print('Visualizing...')
+        visualize_flight(as_series, delay=parsed_args.delay)

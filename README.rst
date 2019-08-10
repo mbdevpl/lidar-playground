@@ -82,3 +82,20 @@ To get help about available functionality:
 .. code:: bash
 
     python3 -m lidar_playground --help
+
+To display a visualization of drone's flight:
+
+.. code:: bash
+
+    python3 -m lidar_playground plot --lidar-data PATH --gps-data PATH [--delay SECONDS]
+    # example:
+    python3 -m lidar_playground plot --lidar-data test/examples/LIDARPoints.csv --gps-data test/examples/FlightPath.csv
+
+Where LIDAR data should be a CSV file. The first line has the scan ID and number of data lines
+(number of recorded points for that sweep). Each following line has the angle of the data point
+(in degrees) and the distance (in millimeters) until the next scan ID header line.
+
+And GPS data should also a CSV file. The first line has the scan ID and number of data line
+(always 1). The next line is the X,Y location of the drone in meters.
+
+In an example files ``test/examples/LIDARPoints.csv`` and ``test/examples/FlightPath.csv`` 34 sweeps are included.
