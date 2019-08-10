@@ -11,10 +11,6 @@ LIDAR playground
 
 Various experiments with LIDAR data.
 
-.. image:: https://img.shields.io/github/license/mbdevpl/lidar-playground.svg
-    :target: https://github.com/mbdevpl/lidar-playground/blob/master/NOTICE
-    :alt: license
-
 This package was created as an experiment.
 
 
@@ -53,6 +49,7 @@ To see test coverage:
 
 .. code:: bash
 
+    pip3 install coverage
     python3 -m coverage run --source . --branch -m unittest -v
     python3 -m coverage report --show-missing  # show coverage report in the terminal
     python3 -m coverage html  # generate HTML coverage report
