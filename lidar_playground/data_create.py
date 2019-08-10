@@ -64,12 +64,18 @@ def extract_vectors(path: pathlib.Path):
     return walls, flight_points
 
 
-def simulate_flight(walls: t.List[LineString], sweep_locations: t.List[Point]):
-    flight_data = pd.DataFrame(
-        data=[[point.x, -point.y] for point in sweep_locations],
-        columns=['x', 'y'], index=list(range(len(sweep_locations))))
+def postprocess_flight_data(flight_data: pd.DataFrame) -> t.List[Point]:
+    return[Point(row['x'], -row['y']) for index, row in flight_data.iterrows()]
 
-    _LOG.debug('GPS points: %i', len(flight_data))
+
+def simulate_flight(walls: t.List[LineString], sweep_locations: t.List[Point],
+                    skip_flight_data: bool = False):
+    if not skip_flight_data:
+        flight_data = pd.DataFrame(
+            data=[[point.x, -point.y] for point in sweep_locations],
+            columns=['x', 'y'], index=list(range(len(sweep_locations))))
+
+        _LOG.debug('GPS points: %i', len(flight_data))
 
     angles = np.linspace(-np.pi, np.pi, 500)
     cartesians = [cartesian(1000, radians) for radians in angles]
@@ -88,6 +94,7 @@ def simulate_flight(walls: t.List[LineString], sweep_locations: t.List[Point]):
         assert len(lidar_data[i]) <= 500
 
     _LOG.debug('LIDAR points: %i', len(lidar_data))
-    assert len(flight_data) == len(lidar_data)
-
-    return flight_data, lidar_data
+    if not skip_flight_data:
+        assert len(flight_data) == len(lidar_data)
+        return flight_data, lidar_data
+    return lidar_data
