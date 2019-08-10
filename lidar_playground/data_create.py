@@ -2,6 +2,7 @@ import collections
 import pathlib
 import typing as t
 
+import pandas as pd
 from svglib.svglib import svg2rlg
 from reportlab.graphics.shapes import Group, Rect, Path
 from reportlab.lib.colors import Color
@@ -61,4 +62,10 @@ def extract_vectors(path: pathlib.Path):
 
 
 def simulate_flight(walls: t.List[Line], sweep_locations: t.List[Point]):
-    raise NotImplementedError()
+    flight_data = pd.DataFrame(
+        data=[[point.x, point.y] for point in sweep_locations],
+        columns=['x', 'y'], index=list(range(len(sweep_locations))))
+
+    lidar_data = None
+
+    return flight_data, lidar_data
