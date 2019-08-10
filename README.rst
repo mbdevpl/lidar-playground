@@ -83,6 +83,12 @@ To get help about available functionality:
 
     python3 -m lidar_playground --help
 
+Below is the description of current features.
+
+
+Visuzalization
+~~~~~~~~~~~~~~
+
 To display a visualization of drone's flight:
 
 .. code:: bash
@@ -99,3 +105,37 @@ And GPS data should also a CSV file. The first line has the scan ID and number o
 (always 1). The next line is the X,Y location of the drone in meters.
 
 In an example files ``test/examples/LIDARPoints.csv`` and ``test/examples/FlightPath.csv`` 34 sweeps are included.
+
+To create a visualization of drone's flight:
+
+
+Data creation
+~~~~~~~~~~~~~
+
+To create synthetic data simulating a drone's flight:
+
+.. code:: bash
+
+    python3 -m lidar_playground create --svg PATH --lidar-data PATH --gps-data PATH
+    # example:
+    python3 -m lidar_playground create --svg test/examples/layout1.svg --lidar-data test/examples/my_lidar.csv --gps-data test/examples/my_flight.csv
+
+Where SVG file provided can be created in visual tool such as Inkscape, according to the following rules:
+
+1. Each shape in black colour will be treated as obstacle and it's outline will be interpreted
+   as walls which reflect LIDAR signal.
+
+2. Each shape in any other colour will be treate as part of drone's flight path.
+
+It is recommended to create many shapes in black colour, but only one shape in other colour.
+
+The following restrictions/remarks apply:
+
+1. Only each shape's outline is taken into account (whether it is filled or not doesn't matter).
+
+2. Only certain shape types are allowed (currently: rectangles and paths).
+
+3. In any line to be treated as part of drone's flight plan, only end points of the line will
+   be used as places where sweep takes place.
+
+LIDAR and GPS data files will be created according to specification given above in the visualization section.
